@@ -1,8 +1,10 @@
 ﻿using SalesWebMVC.Patterns;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SalesWebMVC.Data.Entity
 {
+    //Vendedor 
     public class SellerEntity : EntityPattern
     {
         [Column("ds_email")]
@@ -17,6 +19,8 @@ namespace SalesWebMVC.Data.Entity
         [Column("nr_salario")]
         public double NrSalario { get; set; }
 
+
+       
         public DepartmentEntity Department { get; set; }
 
         [Column("fk_departamento")]

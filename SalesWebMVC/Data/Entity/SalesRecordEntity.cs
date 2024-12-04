@@ -1,12 +1,14 @@
 ﻿using SalesWebMVC.Data.Enums;
 using SalesWebMVC.Patterns;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SalesWebMVC.Data.Entity
 {
+    //Vendas feitas pelo vendedor
     public class SalesRecordEntity : EntityPattern
     {
-
+        [JsonIgnore]
         public SaleStatus SaleStatus { get; set; }
 
         [Column("ds_valor")]
