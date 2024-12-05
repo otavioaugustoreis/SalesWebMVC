@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 namespace SalesWebMVC.Data.Entity
 {
     //Vendas feitas pelo vendedor
+    [Table("TB_SALESRECORD")]
     public class SalesRecordEntity : EntityPattern
     {
         [JsonIgnore]
@@ -23,7 +24,7 @@ namespace SalesWebMVC.Data.Entity
         { 
         }
 
-        public SalesRecordEntity(SaleStatus saleStatus, double valor , SellerEntity seller)
+        public SalesRecordEntity(int id, SaleStatus saleStatus, double valor , SellerEntity seller) : base(id)
         {
             SaleStatus = saleStatus;
             Valor = valor;

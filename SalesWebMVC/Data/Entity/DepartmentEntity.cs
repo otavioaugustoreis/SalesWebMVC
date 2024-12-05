@@ -5,10 +5,11 @@ using System.Text.Json.Serialization;
 namespace SalesWebMVC.Data.Entity
 {
     //Departamento 
+    [Table("TB_DEPARTMENT")]
     public class DepartmentEntity : EntityPattern
     {
         
-        [Column("DsNome")]
+        [Column("ds_nome")]
         public string DsNome { get; set; }
 
         [JsonIgnore]
@@ -29,8 +30,22 @@ namespace SalesWebMVC.Data.Entity
             ListSeller.Add(seller);
         }
 
+        public double totalSales(DateTime initial, DateTime final)
+        {
+            /*Jeito que eu fiz
+             double value = 0.0;
 
+            ListSeller.ForEach(p =>
+            {
+              value +=  p.SalesRecords.Where(d => d.DhInclusao >= initial && d.DhInclusao <= final)
+                               .Select(s => s.Valor)
+                               .Sum();
+            });
 
-        
+            return value;*/
+
+            //Jeito do nélio
+            return ListSeller.Sum(seller => seller.totalSales(initial, final));
+        }
     }
 }

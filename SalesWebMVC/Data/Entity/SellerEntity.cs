@@ -1,10 +1,13 @@
-﻿using SalesWebMVC.Patterns;
+﻿using Microsoft.EntityFrameworkCore.Storage.Json;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SalesWebMVC.Patterns;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace SalesWebMVC.Data.Entity
 {
     //Vendedor 
+    [Table("TB_SELLER")]
     public class SellerEntity : EntityPattern
     {
         [Column("ds_email")]
@@ -19,12 +22,10 @@ namespace SalesWebMVC.Data.Entity
         [Column("nr_salario")]
         public double NrSalario { get; set; }
 
-
-       
         public DepartmentEntity Department { get; set; }
 
         [Column("fk_departamento")]
-        public int  FkDepartamento { get; set; }
+        public int FkDepartamento { get; set; } = 1;
 
         public List<SalesRecordEntity> SalesRecords { get; set; }
 
@@ -43,6 +44,18 @@ namespace SalesWebMVC.Data.Entity
         public void addSales(SalesRecordEntity salesRecordEntity)
         {
             SalesRecords.Add(salesRecordEntity);
+        }
+
+        public void removeSales(SalesRecordEntity salesRecordEntity)
+        {
+            SalesRecords.Remove(salesRecordEntity);
+        }
+
+        public double totalSales(DateTime initial, DateTime final)
+        {
+            return SalesRecords.Where(d => d.DhInclusao >= initial && d.DhInclusao <= final)
+                               .Select(s => s.Valor)
+                               .Sum();
         }
     }
 }

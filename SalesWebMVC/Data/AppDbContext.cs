@@ -11,9 +11,9 @@ namespace SalesWebMVC.Data
         }
 
         //Adicionando as classes que serão usadas pelo EF 
-        public DbSet<SellerEntity> sellerEntities { get; set; }
-        public DbSet<DepartmentEntity> departmentEntities { get; set; }
-        public DbSet<SalesRecordEntity> salesRecordEntities { get; set; }
+        public DbSet<SellerEntity> Seller{ get; set; }
+        public DbSet<DepartmentEntity> Departments { get; set; }
+        public DbSet<SalesRecordEntity> Sales { get; set; }
 
         //Criando relações
         protected override void OnModelCreating(ModelBuilder modelBuilder)
