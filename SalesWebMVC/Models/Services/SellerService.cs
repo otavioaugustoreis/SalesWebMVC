@@ -1,7 +1,10 @@
-﻿using SalesWebMVC.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesWebMVC.Data;
 using SalesWebMVC.Data.Entity;
 using SalesWebMVC.Data.Repositories;
 using SalesWebMVC.Models.Repositories;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace SalesWebMVC.Models.Services
 {
@@ -9,6 +12,13 @@ namespace SalesWebMVC.Models.Services
     {
         public SellerService(AppDbContext context) : base(context)
         {
+        }
+
+        public SellerEntity? loadingDepartament(Expression<Func<SellerEntity, bool>> predicate)
+        {
+            //O include trás no banco tambem a classe(tabela) que eu colocar dentro dele, ou seja, busquei a classe Department
+            return base._context.Seller.Include(obj => obj.Department)
+                                        .FirstOrDefault(predicate);
         }
     }
 }

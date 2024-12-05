@@ -29,6 +29,8 @@ namespace SalesWebMVC.Data.Repositories
             return _context.Set<T>().FirstOrDefault(predicate);
         }
 
+     
+
         public T Post(T entidade)
         {
             _context.Set<T>().Add(entidade);

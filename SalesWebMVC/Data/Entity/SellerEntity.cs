@@ -25,7 +25,7 @@ namespace SalesWebMVC.Data.Entity
         public DepartmentEntity Department { get; set; }
 
         [Column("fk_departamento")]
-        public int FkDepartamento { get; set; } = 1;
+        public int FkDepartamento { get; set; } 
 
         public List<SalesRecordEntity> SalesRecords { get; set; }
 

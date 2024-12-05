@@ -1,0 +1,50 @@
+﻿@model SalesWebMVC.Data.Entity.SellerEntity
+
+
+@{
+    ViewData["Tittle"] = "Details";
+}
+
+<h2>@ViewData["Tittle"]</h2>
+
+|<div>
+    <h4> Seller</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DsNome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DsNome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DsEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DsEmail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DhAniversario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DhAniversario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NrSalario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NrSalario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+    </dl>
+    
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a asp-action="Index"> Back to List</a>
+</div>
