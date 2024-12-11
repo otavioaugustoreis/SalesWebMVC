@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 using SalesWebMVC.Data.Entity;
 using SalesWebMVC.Data.Repositories;
@@ -17,8 +18,13 @@ namespace SalesWebMVC.Models.Services
         public SellerEntity? loadingDepartament(Expression<Func<SellerEntity, bool>> predicate)
         {
             //O include trás no banco tambem a classe(tabela) que eu colocar dentro dele, ou seja, busquei a classe Department
-            return base._context.Seller.Include(obj => obj.Department)
+            return _context.Seller.Include(obj => obj.Department)
                                         .FirstOrDefault(predicate);
         }
+
+        public async Task<List<SellerEntity>> FindAllAsync()
+        {
+            return await _context.Seller.ToListAsync();
+        } 
     }
 }

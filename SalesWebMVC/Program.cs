@@ -2,12 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 using SalesWebMVC.Providers;
 using System;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 
 string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -23,8 +23,9 @@ builder.Services.AddDIPTransientClasse();
 builder.Services.AddConfigurationJson();
 
 
-
 var app = builder.Build();
+
+app.AddLanguageSystem();
 
 using (var scope = app.Services.CreateScope())
 {

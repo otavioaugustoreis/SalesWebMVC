@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.Json;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesWebMVC.Patterns;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -17,8 +18,14 @@ namespace SalesWebMVC.Data.Entity
         public string DsNome { get; set; }
 
         [Column("dh_aniversario")]
+        [Display(Name = "Birth Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DhAniversario { get; set; }
 
+
+        [DisplayFormat(DataFormatString = "{0:F2}")]
+        [Display(Name = "Salary")]
         [Column("nr_salario")]
         public double NrSalario { get; set; }
 

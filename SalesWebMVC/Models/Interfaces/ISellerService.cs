@@ -7,5 +7,7 @@ namespace SalesWebMVC.Models.Repositories
     public interface ISellerService : IRepository<SellerEntity>
     {
         SellerEntity? loadingDepartament(Expression<Func<SellerEntity, bool>> predicate);
+
+        Task<List<SellerEntity>> FindAllAsync();
     }
 }

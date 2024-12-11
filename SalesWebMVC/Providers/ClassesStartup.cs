@@ -1,5 +1,8 @@
-﻿using SalesWebMVC.Data;
+﻿using Microsoft.AspNetCore.Mvc.ViewComponents;
+using SalesWebMVC.Data;
+using SalesWebMVC.Data.Entity;
 using SalesWebMVC.Data.Repositories;
+using SalesWebMVC.Models;
 using SalesWebMVC.Models.Repositories;
 using SalesWebMVC.Models.Services;
 using SalesWebMVC.UnitOfWork;
@@ -17,7 +20,7 @@ namespace SalesWebMVC.Providers
             services.AddScoped<ISalesRecordService, SalesRecordService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWorkClass>();
-
+            
             return services;
         }
         public static IServiceCollection AddDIPSingletonClasse(this IServiceCollection services)

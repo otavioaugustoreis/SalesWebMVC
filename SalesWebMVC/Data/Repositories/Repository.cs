@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SalesWebMVC.Models.Exceptions;
+using SalesWebMVC.Patterns;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace SalesWebMVC.Data.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : EntityPattern
     {
 
         protected readonly AppDbContext _context;
@@ -29,7 +32,7 @@ namespace SalesWebMVC.Data.Repositories
             return _context.Set<T>().FirstOrDefault(predicate);
         }
 
-     
+
 
         public T Post(T entidade)
         {
@@ -39,8 +42,17 @@ namespace SalesWebMVC.Data.Repositories
 
         public T Put(T entidade)
         {
-            _context.Set<T>().Update(entidade);
-            return entidade;
+            try
+            {
+                _context.Set<T>().Update(entidade);
+                return entidade;
+            }
+            catch (DBConcurrencyException ex)
+            {
+                throw new DbConcurrencyException(ex.Message);
+            }
+
+            
         }
     }
 }
