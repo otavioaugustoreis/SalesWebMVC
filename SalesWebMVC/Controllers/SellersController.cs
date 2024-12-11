@@ -87,12 +87,17 @@ namespace SalesWebMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
+            try { 
             SellerEntity sr = _uof._Seller.GetId(p => p.Id == id);
 
             _uof._Seller.Delete(sr);
             _uof.Commit();
 
             return RedirectToAction(nameof(Index));
+            }catch(IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new {message  = e.Message});
+            }
         }
 
         public IActionResult Details(int? id)

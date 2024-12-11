@@ -18,8 +18,16 @@ namespace SalesWebMVC.Data.Repositories
 
         public T Delete(T entidade)
         {
-            _context.Set<T>().Remove(entidade);
-            return entidade;
+            try
+            {
+                _context.Set<T>().Remove(entidade);
+                return entidade;
+            }
+            catch (DbUpdateException e)
+            {
+                throw new IntegrityException(e.Message);
+            }
+
         }
 
         public IEnumerable<T> Get()
@@ -51,8 +59,6 @@ namespace SalesWebMVC.Data.Repositories
             {
                 throw new DbConcurrencyException(ex.Message);
             }
-
-            
         }
     }
 }
