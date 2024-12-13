@@ -8,6 +8,7 @@ using SalesWebMVC.Models.Services;
 using SalesWebMVC.UnitOfWork;
 using System.Data;
 using System.Diagnostics;
+using System.Linq.Expressions;
 //using SalesWebMVC.Views.ViewsModel;
 
 
@@ -25,7 +26,7 @@ namespace SalesWebMVC.Controllers
         }
 
 
-        public async  Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var sellers = await _uof._Seller.FindAllAsync();
 
@@ -49,37 +50,51 @@ namespace SalesWebMVC.Controllers
         public IActionResult Create(SellerEntity seller)
 
         {
-            if (!ModelState.IsValid)
+            try
             {
-                IEnumerable<DepartmentEntity> departmentEntities = _uof._Department.Get();
-
-                SellerFormViewModel obj = new SellerFormViewModel()
+                if (!ModelState.IsValid)
                 {
-                    Seller = seller,
-                    Department = departmentEntities
-                };
+                    IEnumerable<DepartmentEntity> departmentEntities = _uof._Department.Get();
 
-                return View(obj);
+                    SellerFormViewModel obj = new SellerFormViewModel()
+                    {
+                        Seller = seller,
+                        Department = departmentEntities
+                    };
+
+                    return View(obj);
+                }
+
+
+                _uof._Seller.Post(seller);
+                _uof.Commit();
+
+                return RedirectToAction(nameof(Index));
             }
-
-
-            _uof._Seller.Post(seller);
-            _uof.Commit();
-
-            return RedirectToAction(nameof(Index));
+            catch (IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Seller is not found" });
+            }
         }
 
         public IActionResult Delete(int? id)
         {
-            if (id < 0 || id is null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
+            try
+            {
+                if (id < 0 || id is null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
 
 
-            var obj = _uof._Seller.GetId(p => p.Id == id);
+                var obj = _uof._Seller.GetId(p => p.Id == id);
 
-            if (obj is null) return RedirectToAction(nameof(Error), new { message = "Seller is not found" });
+                if (obj is null) return RedirectToAction(nameof(Error), new { message = "Seller is not found" });
 
 
-            return View(obj);
+                return View(obj);
+            }
+            catch (IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Seller is not found" });
+            }
         }
 
 
@@ -87,16 +102,18 @@ namespace SalesWebMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            try { 
-            SellerEntity sr = _uof._Seller.GetId(p => p.Id == id);
-
-            _uof._Seller.Delete(sr);
-            _uof.Commit();
-
-            return RedirectToAction(nameof(Index));
-            }catch(IntegrityException e)
+            try
             {
-                return RedirectToAction(nameof(Error), new {message  = e.Message});
+                SellerEntity sr = _uof._Seller.GetId(p => p.Id == id);
+
+                _uof._Seller.Delete(sr);
+                _uof.Commit();
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
         }
 
