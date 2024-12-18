@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SalesWebMVC.Data.Entity.SellerEntity>
+﻿@model IEnumerable<SalesWebMVC.Models.DTO.SellerEntityDTOResponse>
 
 @{
     ViewData["Title"] = "Sellers";
@@ -28,7 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.NrSalario)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
         </tr>
         <th></th>
     </thead>
@@ -47,6 +49,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => seller.NrSalario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => seller.Department.DsNome)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@seller.Id">Edit</a>

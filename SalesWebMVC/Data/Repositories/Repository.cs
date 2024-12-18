@@ -41,7 +41,6 @@ namespace SalesWebMVC.Data.Repositories
         }
 
 
-
         public T Post(T entidade)
         {
             _context.Set<T>().Add(entidade);

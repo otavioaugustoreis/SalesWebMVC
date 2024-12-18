@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using NuGet.Protocol.Plugins;
 using SalesWebMVC.Data.Entity;
 using SalesWebMVC.Models;
+using SalesWebMVC.Models.DTO;
 using SalesWebMVC.Models.Exceptions;
 using SalesWebMVC.Models.Services;
 using SalesWebMVC.UnitOfWork;
@@ -19,25 +21,29 @@ namespace SalesWebMVC.Controllers
     {
 
         private readonly IUnitOfWork _uof;
-
-        public SellersController(IUnitOfWork uof)
+        private readonly IMapper _mapper;
+        public SellersController(IUnitOfWork uof, IMapper mapper)
         {
             _uof = uof;
+            _mapper = mapper;
         }
 
-
-        public async Task<IActionResult> Index()
+        //Caso não haja nenhum verbo ex: [HttpPost] o EntityFrameWork identifica o método 
+        //[HttpGet]
+        public async Task<ActionResult<SellerEntityDTOResponse>> Index()
         {
             var sellers = await _uof._Seller.FindAllAsync();
 
-            return View(sellers);
+            var sellerDtoResponse = _mapper.Map<IEnumerable<SellerEntityDTOResponse>>(sellers);
+
+            return View(sellerDtoResponse);
         }
 
 
-        public IActionResult Create()
+        public ActionResult<SellerFormViewDTORequest> Create()
         {
             var departments = _uof._Department.Get();
-            var viewModel = new SellerFormViewModel()
+            var viewModel = new SellerFormViewDTORequest()
             {
                 Department = departments
             };
@@ -45,26 +51,33 @@ namespace SalesWebMVC.Controllers
             return View(viewModel);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(SellerEntity seller)
-
+        public ActionResult<SellerFormViewDTORequest> Create(SellerFormViewDTORequest sellerRequest)
         {
             try
             {
-                if (!ModelState.IsValid)
+                if(sellerRequest is { Seller.Department: null, Seller.NrSalario: < 0 }) return RedirectToAction(nameof(Error), new { message = "Seller is not found" });
+
+                var formRequest = sellerRequest.Seller;
+
+                var seller = _mapper.Map<SellerEntity>(formRequest);
+                
+                if (ModelState.IsValid)
                 {
                     IEnumerable<DepartmentEntity> departmentEntities = _uof._Department.Get();
 
-                    SellerFormViewModel obj = new SellerFormViewModel()
+                    var dtoResponse = _mapper.Map<SellerEntityDTORequest>(seller);
+
+                    SellerFormViewDTORequest obj = new SellerFormViewDTORequest()
                     {
-                        Seller = seller,
+                        Seller = dtoResponse,
                         Department = departmentEntities
                     };
 
                     return View(obj);
                 }
-
 
                 _uof._Seller.Post(seller);
                 _uof.Commit();
@@ -84,12 +97,13 @@ namespace SalesWebMVC.Controllers
                 if (id < 0 || id is null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
 
 
-                var obj = _uof._Seller.GetId(p => p.Id == id);
+                var obj = _uof._Seller.loadingDepartament(p => p.Id == id);
 
                 if (obj is null) return RedirectToAction(nameof(Error), new { message = "Seller is not found" });
 
+                var dto = _mapper.Map<SellerEntityDTOResponse>(obj);
 
-                return View(obj);
+                return View(dto);
             }
             catch (IntegrityException e)
             {
@@ -100,7 +114,7 @@ namespace SalesWebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
             try
             {
@@ -117,7 +131,8 @@ namespace SalesWebMVC.Controllers
             }
         }
 
-        public IActionResult Details(int? id)
+        public ActionResult<SellerEntityDTOResponse> Details(int? id)
+
         {
             if (id < 0 || id is null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
 
@@ -127,10 +142,12 @@ namespace SalesWebMVC.Controllers
             if (obj is null) return RedirectToAction(nameof(Error), new { message = "Seller not found" });
 
 
-            return View(obj);
+            var dto = _mapper.Map<SellerEntityDTOResponse>(obj);
+
+            return View(dto);
         }
 
-        public IActionResult Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id is null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
 
@@ -139,9 +156,11 @@ namespace SalesWebMVC.Controllers
 
             IEnumerable<DepartmentEntity> departmentEntities = _uof._Department.Get();
 
-            SellerFormViewModel obj = new SellerFormViewModel()
+            var sellerDto = _mapper.Map<SellerEntityDTOResponse>(sr1);
+
+            SellerFormViewDTOResponse obj = new SellerFormViewDTOResponse()
             {
-                Seller = sr1,
+                Seller = sellerDto,
                 Department = departmentEntities
             };
 
@@ -150,13 +169,13 @@ namespace SalesWebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id, SellerEntity sellerEntity)
+        public ActionResult<SellerFormViewDTORequest> Edit(int? id, SellerEntityDTORequest sellerEntity)
         {
             if (!ModelState.IsValid)
             {
                 IEnumerable<DepartmentEntity> departmentEntities = _uof._Department.Get();
 
-                SellerFormViewModel obj = new SellerFormViewModel()
+                SellerFormViewDTORequest obj = new SellerFormViewDTORequest()
                 {
                     Seller = sellerEntity,
                     Department = departmentEntities
@@ -164,12 +183,14 @@ namespace SalesWebMVC.Controllers
 
                 return View(obj);
             }
+            
+            var seller = _mapper.Map<SellerEntity>(sellerEntity);
 
-            if (id != sellerEntity.Id) BadRequest();
+            if (id != seller.Id) BadRequest();
 
             try
             {
-                _uof._Seller.Put(sellerEntity);
+                _uof._Seller.Put(seller);
                 _uof.Commit();
                 return RedirectToAction(nameof(Index));
             }
@@ -186,7 +207,7 @@ namespace SalesWebMVC.Controllers
 
 
 
-        public IActionResult Error(string message = "Deu erro")
+        public ActionResult Error(string message = "Deu erro")
         {
             var viewModel = new ErrorViewModel
             {

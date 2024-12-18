@@ -22,9 +22,11 @@ namespace SalesWebMVC.Models.Services
                                         .FirstOrDefault(predicate);
         }
 
-        public async Task<List<SellerEntity>> FindAllAsync()
+        public async Task<IEnumerable<SellerEntity>> FindAllAsync()
         {
-            return await _context.Seller.ToListAsync();
+                                        //Usando o método eager loading
+            return await _context.Seller.Include(d => d.Department)
+                                        .ToListAsync();
         } 
     }
 }

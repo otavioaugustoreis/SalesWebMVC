@@ -1,4 +1,4 @@
-﻿@model SalesWebMVC.Data.Entity.SellerEntity
+﻿@model SalesWebMVC.Models.DTO.SellerEntityDTOResponse
 
 
 @{
@@ -7,9 +7,9 @@
 
 <h2>@ViewData["Tittle"]</h2>
 
-|<div>
+<div>
     <h4> Seller</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.DsNome)
@@ -39,12 +39,13 @@
             @Html.DisplayNameFor(model => model.Department)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Department)
+            @Html.DisplayFor(model => model.Department.DsNome)
         </dd>
     </dl>
     
 </div>
 <div>
+    @*Passando o id = asp-route-id para o action "Edit" id*@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
     <a asp-action="Index"> Back to List</a>
 </div>

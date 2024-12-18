@@ -8,6 +8,6 @@ namespace SalesWebMVC.Models.Repositories
     {
         SellerEntity? loadingDepartament(Expression<Func<SellerEntity, bool>> predicate);
 
-        Task<List<SellerEntity>> FindAllAsync();
+        Task<IEnumerable<SellerEntity>> FindAllAsync();
     }
 }

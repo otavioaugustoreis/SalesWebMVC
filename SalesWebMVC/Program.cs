@@ -18,6 +18,7 @@ builder.Services.AddConectionBD(mySqlConnection);
 builder.Services.AddDIPScoppedClasse();
 builder.Services.AddDIPSingletonClasse();
 builder.Services.AddDIPTransientClasse();
+builder.Services.AddAutoMapperStartup();
 
 //Configurando referência ciclica com JsonIgnore
 builder.Services.AddConfigurationJson();

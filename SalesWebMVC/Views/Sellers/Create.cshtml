@@ -1,4 +1,4 @@
-﻿@model SalesWebMVC.Data.Entity.SellerFormViewModel
+﻿@model SalesWebMVC.Models.DTO.SellerFormViewDTORequest
 
 @{
     ViewData["Title"] = "Create";
@@ -43,6 +43,7 @@
                 <select asp-for="Seller.FkDepartamento" asp-items="@(new SelectList(Model.Department,"Id", "DsNome"))" class="form-control"></select> 
            </div>
             <div class="form-group">
+                @* Identificador do Create com o HttpPost é usar esse input escondido*@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>

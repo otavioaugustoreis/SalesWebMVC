@@ -11,6 +11,10 @@ namespace SalesWebMVC.Providers
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            }).AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
 
             return services;
