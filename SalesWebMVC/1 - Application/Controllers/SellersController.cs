@@ -169,13 +169,13 @@ namespace SalesWebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult<SellerFormViewDTORequest> Edit(int? id, SellerEntityDTORequest sellerEntity)
+        public ActionResult<SellerFormViewDTORequest> Edit(int? id, SellerEntityDTOResponse sellerEntity)
         {
             if (!ModelState.IsValid)
             {
                 IEnumerable<DepartmentEntity> departmentEntities = _uof._Department.Get();
 
-                SellerFormViewDTORequest obj = new SellerFormViewDTORequest()
+                SellerFormViewDTOResponse obj = new SellerFormViewDTOResponse()
                 {
                     Seller = sellerEntity,
                     Department = departmentEntities
