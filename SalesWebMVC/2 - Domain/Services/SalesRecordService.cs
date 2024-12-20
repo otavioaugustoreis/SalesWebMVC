@@ -12,28 +12,29 @@ namespace SalesWebMVC.Models.Services
         {
         }
 
-        public async Task<List<SalesRecordEntity>> FindByDate(DateTime? minDate, DateTime? maxDate)
-        {
-            if (!minDate.HasValue || !maxDate.HasValue)  return null;
-            
+        public async Task<List<SalesRecordEntity>> FindByDate(  DateTime? minDate, DateTime? maxDate)
+        { 
 
-            return await _context.Sales.Where(sr => sr.DhInclusao >= minDate && sr.DhInclusao <= maxDate)
+            return await _context.Sales.Where(sr => sr.DhInclusao >= minDate.Value && sr.DhInclusao <= maxDate.Value)
                                 .ToListAsync();
         }
 
         //Método agrupado
         public async Task<List<IGrouping<DepartmentEntity, SalesRecordEntity>>> FindByDateGroupingAsync(DateTime? minDate, DateTime? maxDate)
         {
-            if (!minDate.HasValue || !maxDate.HasValue) return null;
+            if (!minDate.HasValue || !maxDate.HasValue)
+            {
+                
+            }
 
-
-            return await _context.Sales.
+                return await _context.Sales.
                  Include(x => x.Seller)
                 .Include(x => x.Seller.Department)
+                //Ordem decrecente 
                 .OrderByDescending(x => x.DhInclusao)
                 // O retorno de um groupBy é uma Lista IGrouping               
                 .GroupBy(x => x.Seller.Department)
-                                .ToListAsync();
+                .ToListAsync();
         }
 
     }

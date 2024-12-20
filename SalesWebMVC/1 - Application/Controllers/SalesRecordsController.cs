@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using SalesWebMVC.UnitOfWork;
 
 namespace SalesWebMVC.Controllers
@@ -20,14 +21,24 @@ namespace SalesWebMVC.Controllers
 
         public async Task<IActionResult> SimpleSearch(DateTime? minDate, DateTime? maxDate)
         {
-            if(!minDate.HasValue) minDate = DateTime.Now;
+            if (!minDate.HasValue && !maxDate.HasValue)
+            {
+                minDate = DateTime.Now;
+                maxDate = DateTime.Now.AddMonths(3);
+            };
 
-            if (!maxDate.HasValue) minDate = DateTime.Now.AddDays(1);
+            if (!minDate.HasValue)
+            {
+                minDate = maxDate.Value.AddMonths(-3);
+            }
 
-            //Enviando valores pro front
+            if (!maxDate.HasValue)
+            {
+                maxDate = minDate.Value.AddMonths(3);
+            }
 
             ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
-            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd"); 
+            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
 
             var consulta = await _uof._Sales.FindByDate(minDate, maxDate);
 
