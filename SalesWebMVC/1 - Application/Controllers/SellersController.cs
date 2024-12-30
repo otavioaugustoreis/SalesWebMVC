@@ -84,7 +84,7 @@ namespace SalesWebMVC.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (IntegrityException e)
+            catch (IntegrityException  e)
             {
                 return RedirectToAction(nameof(Error), new { message = "Seller is not found" });
             }

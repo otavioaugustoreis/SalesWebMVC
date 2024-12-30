@@ -30,6 +30,12 @@ namespace SalesWebMVC.Data.Repositories
 
         }
 
+        /*
+          public IQueryable<T> Get()
+        {
+            return _context.Set<T>().AsNoTracking();
+        }
+         */
         public IEnumerable<T> Get()
         {
             return _context.Set<T>().AsNoTracking().ToList();

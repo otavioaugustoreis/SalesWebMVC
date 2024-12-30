@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
+using SalesWebMVC._1___Application.Models;
+using SalesWebMVC._2___Domain.Filters;
 using SalesWebMVC.UnitOfWork;
 
 namespace SalesWebMVC.Controllers
@@ -19,30 +21,40 @@ namespace SalesWebMVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> SimpleSearch(DateTime? minDate, DateTime? maxDate)
+        public async Task<IActionResult> SimpleSearch(SalesRecordsFilter salesRecordsFilter)
         {
-            if (!minDate.HasValue && !maxDate.HasValue)
+
+            if (!salesRecordsFilter.minDate.HasValue && !salesRecordsFilter.maxDate.HasValue)
             {
-                minDate = DateTime.Now;
-                maxDate = DateTime.Now.AddMonths(3);
+                salesRecordsFilter.minDate = DateTime.Now;
+                salesRecordsFilter.maxDate = DateTime.Now.AddMonths(3);
+            }
+
+            if (!salesRecordsFilter.minDate.HasValue)
+            {
+                salesRecordsFilter.minDate = salesRecordsFilter.maxDate.Value.AddMonths(-3);
+            }
+
+            if (!salesRecordsFilter.maxDate.HasValue)
+            {
+                salesRecordsFilter.maxDate = salesRecordsFilter.minDate.Value.AddMonths(3);
+            }
+
+            if (String.IsNullOrEmpty(salesRecordsFilter.DsNome))
+            {
+                salesRecordsFilter.DsNome = string.Empty;
+            }
+
+            var consulta = await _uof._Sales.GetSalesRecordsFilter(salesRecordsFilter);
+
+            //Se você cria uma classe para armazenar os valores, é mais fácil para a view trabalhar com essa classe!!, por isso a criação do SalesRescordsSearchViewModel
+            var viewModel = new SalesRecordsSearchViewModel
+            {
+                Filter = salesRecordsFilter,
+                SalesRecords = consulta
             };
 
-            if (!minDate.HasValue)
-            {
-                minDate = maxDate.Value.AddMonths(-3);
-            }
-
-            if (!maxDate.HasValue)
-            {
-                maxDate = minDate.Value.AddMonths(3);
-            }
-
-            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
-            ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
-
-            var consulta = await _uof._Sales.FindByDate(minDate, maxDate);
-
-            return View(consulta);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> GroupingSearch(DateTime? minDate, DateTime? maxDate)
@@ -58,7 +70,7 @@ namespace SalesWebMVC.Controllers
 
             var result = await _uof._Sales.FindByDateGroupingAsync(minDate, maxDate);
             return View(result);
-            
+
         }
 
 

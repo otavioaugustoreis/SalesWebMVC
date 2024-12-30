@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SalesWebMVC._2___Domain.Filters;
 using SalesWebMVC.Data;
 using SalesWebMVC.Data.Entity;
 using SalesWebMVC.Data.Repositories;
@@ -40,6 +41,23 @@ namespace SalesWebMVC.Models.Services
                 .ToListAsync();
         }
 
+        public async Task<List<SalesRecordEntity>> GetSalesRecordsFilter(SalesRecordsFilter salesRecordsFilter)
+        {
+            var minDate = salesRecordsFilter.minDate;
+            var maxDate = salesRecordsFilter.maxDate;
+            var name    = salesRecordsFilter.DsNome ;
+
+            var consulta = _context.Sales.AsQueryable();
+
+            consulta =  consulta
+                .Include(x => x.Seller)
+                .Include(x => x.Seller.Department)
+                .Where(sr => sr.DhInclusao >= minDate.Value && 
+                             sr.DhInclusao <= maxDate.Value &&
+                             (string.IsNullOrEmpty(name) || sr.Seller.DsNome.Contains(name)));
+
+            return await consulta.ToListAsync();
+        }
     }
-    }
+}
 

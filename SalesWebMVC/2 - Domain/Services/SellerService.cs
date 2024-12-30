@@ -27,6 +27,7 @@ namespace SalesWebMVC.Models.Services
                                         //Usando o método eager loading
             return await _context.Seller.Include(d => d.Department)
                                         .ToListAsync();
-        } 
+        }
+
     }
 }
