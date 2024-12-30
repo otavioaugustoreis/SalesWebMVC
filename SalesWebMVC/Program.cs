@@ -20,6 +20,7 @@ builder.Services.AddDIPSingletonClasse();
 builder.Services.AddDIPTransientClasse();
 builder.Services.AddAutoMapperStartup();
 
+
 //Configurando referência ciclica com JsonIgnore
 builder.Services.AddConfigurationJson();
 
@@ -49,11 +50,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 //Rota de navegação padrão, ou seja, caso eu não digite nada, essa vai ser a rota 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
