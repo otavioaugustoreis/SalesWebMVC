@@ -39,10 +39,10 @@
                         @Html.DisplayNameFor(model => model.Seller)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Seller.Department.DsNome)
+                        @Html.DisplayNameFor(model => model.Seller.Department)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Seller.Department)
+                        @Html.DisplayNameFor(model => model.Seller.DhInclusao)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Valor)
@@ -60,7 +60,7 @@
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Seller)
+                            @Html.DisplayFor(modelItem => item.Seller.DsNome)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Seller.Department.DsNome)

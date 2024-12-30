@@ -1,4 +1,5 @@
 ﻿using SalesWebMVC.Patterns;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -10,6 +11,7 @@ namespace SalesWebMVC.Data.Entity
     {
         
         [Column("ds_nome")]
+
         public string DsNome { get; set; }
 
         [JsonIgnore]

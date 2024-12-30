@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesWebMVC.Patterns
@@ -12,6 +13,7 @@ namespace SalesWebMVC.Patterns
         public int? Id { get; set; }
 
         [Column("dh_inclusao")]
+        [DisplayName("Date of inclusion")]
         public DateTime DhInclusao { get; set; } = DateTime.Now;
 
         protected EntityPattern()

@@ -14,6 +14,7 @@ namespace SalesWebMVC.Data.Entity
         [Column("ds_email")]
         public string DsEmail { get; set; }
 
+        [Display(Name = "Name")]
         [Column("ds_nome")]
         public string DsNome { get; set; }
 

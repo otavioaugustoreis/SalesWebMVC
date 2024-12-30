@@ -1,5 +1,6 @@
 ﻿using SalesWebMVC.Data.Enums;
 using SalesWebMVC.Patterns;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -12,6 +13,7 @@ namespace SalesWebMVC.Data.Entity
         [JsonIgnore]
         public SaleStatus SaleStatus { get; set; }
 
+        [DisplayName("Valor")]
         [Column("ds_valor")]
         public double Valor { get; set; }
 
