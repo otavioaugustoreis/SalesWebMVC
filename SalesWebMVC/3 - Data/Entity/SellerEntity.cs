@@ -40,7 +40,7 @@ namespace SalesWebMVC.Data.Entity
         public SellerEntity() : base() { }
 
         public SellerEntity(int id, string dsEmail, string dsNome, DateTime dhAniversario, double nrSalario, DepartmentEntity departmentEntity) :
-            base(id)
+            base()
         {
             DsEmail = dsEmail;
             DsNome = dsNome;

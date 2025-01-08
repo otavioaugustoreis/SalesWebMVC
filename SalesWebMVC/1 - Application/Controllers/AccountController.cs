@@ -22,7 +22,7 @@ namespace SalesWebMVC._1___Application.Controllers
             }
 
             // Autenticação simples (substitua isso por lógica de autenticação real)
-            if (model.Username == "admin" && model.Password == "password") // exemplo
+            if (model.Username == "admin" && model.Password == "123") // exemplo
             {
                 var claims = new List<Claim>
                 {

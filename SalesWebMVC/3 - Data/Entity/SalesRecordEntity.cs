@@ -1,4 +1,5 @@
-﻿using SalesWebMVC.Data.Enums;
+﻿using SalesWebMVC._3___Data.Entity;
+using SalesWebMVC.Data.Enums;
 using SalesWebMVC.Patterns;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,16 +22,25 @@ namespace SalesWebMVC.Data.Entity
         public int FkSeller { get; set; }
         public SellerEntity Seller { get; set; }
 
+
+        public List<SalesProductEntity> SalesProductsList { get; set; } = new();
+
+        
         public SalesRecordEntity() 
             : base()
         { 
         }
 
-        public SalesRecordEntity(int id, SaleStatus saleStatus, double valor , SellerEntity seller) : base(id)
+        public SalesRecordEntity(int id, SaleStatus saleStatus, double valor , SellerEntity seller) : base()
         {
             SaleStatus = saleStatus;
             Valor = valor;
             Seller = seller;
+        }
+
+        public void AdicionarSalesProduts(SalesProductEntity salesProductEntity)
+        {
+            SalesProductsList.Add(salesProductEntity);
         }
     }
 }
