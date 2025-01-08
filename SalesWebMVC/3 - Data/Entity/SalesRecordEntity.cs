@@ -31,7 +31,7 @@ namespace SalesWebMVC.Data.Entity
         { 
         }
 
-        public SalesRecordEntity(int id, SaleStatus saleStatus, double valor , SellerEntity seller) : base()
+        public SalesRecordEntity(int id, SaleStatus saleStatus, double valor , SellerEntity seller) : base(id)
         {
             SaleStatus = saleStatus;
             Valor = valor;

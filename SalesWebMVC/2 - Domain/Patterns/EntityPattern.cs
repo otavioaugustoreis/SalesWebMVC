@@ -19,5 +19,10 @@ namespace SalesWebMVC.Patterns
         protected EntityPattern()
         {
         }
+
+        protected EntityPattern(int id)
+        {
+            Id = Id;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace SalesWebMVC.Data.Entity
         [JsonIgnore]
         public List<SellerEntity> ListSeller { get; set; } = new List<SellerEntity>();
 
-        public DepartmentEntity(int id, string DsNome) : base()
+        public DepartmentEntity(int id, string DsNome) : base(id)
         {
             this.DsNome = DsNome;
         }

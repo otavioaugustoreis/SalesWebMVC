@@ -17,11 +17,10 @@ namespace SalesWebMVC._3___Data.Entity
         [Column("NR_QUANTIDADE")]
         public int Quantity { get; set; }
 
-        
         public List<SalesProductEntity> SalesProductsList { get; set; } = new();
 
-        public ProductEntity(string dsNome, int quantity)
-            : base()
+        public ProductEntity(int id, string dsNome, int quantity)
+            : base(id)
         {
             DsNome = dsNome;
             Quantity = quantity;

@@ -24,7 +24,6 @@ namespace SalesWebMVC.Data.Entity
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DhAniversario { get; set; }
 
-
         [DisplayFormat(DataFormatString = "{0:F2}")]
         [Display(Name = "Salary")]
         [Column("nr_salario")]
@@ -40,7 +39,7 @@ namespace SalesWebMVC.Data.Entity
         public SellerEntity() : base() { }
 
         public SellerEntity(int id, string dsEmail, string dsNome, DateTime dhAniversario, double nrSalario, DepartmentEntity departmentEntity) :
-            base()
+            base(id)
         {
             DsEmail = dsEmail;
             DsNome = dsNome;

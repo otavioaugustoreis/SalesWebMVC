@@ -19,11 +19,16 @@ namespace SalesWebMVC._3___Data.Entity
 
         public  int   Quantity { get; set; }
 
-        public SalesProductEntity(int quantity) 
-            : base()
+        public SalesProductEntity(int id, SalesRecordEntity salesRecordEntity, ProductEntity productEntity , int quantity) 
+            : base(id)
         {
             Quantity = quantity;
+            SalesRecord = salesRecordEntity;
+            Product = productEntity;
         }
 
+        public SalesProductEntity()
+        {
+        }
     }
 }
