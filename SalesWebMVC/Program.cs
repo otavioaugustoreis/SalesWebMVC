@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 using SalesWebMVC.Providers;
@@ -24,6 +25,12 @@ builder.Services.AddAutoMapperStartup();
 //Configurando referência ciclica com JsonIgnore
 builder.Services.AddConfigurationJson();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";  // Redireciona para a página de login se não autenticado
+        options.LogoutPath = "/Account/Logout";
+    });
 
 var app = builder.Build();
 
