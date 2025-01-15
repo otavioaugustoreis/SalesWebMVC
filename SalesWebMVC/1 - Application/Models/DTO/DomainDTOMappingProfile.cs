@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SalesWebMVC.Models.DTO;
+using SalesWebMVC._3___Data.Entity;
 using SalesWebMVC.Data.Entity;
 
 namespace SalesWebMVC.Models.DTO
@@ -9,6 +11,7 @@ namespace SalesWebMVC.Models.DTO
         {
             CreateMap<SellerEntity, SellerEntityDTOResponse>().ReverseMap();
             CreateMap<SellerEntity, SellerEntityDTORequest>().ReverseMap();
+            CreateMap<ProductEntity, ProductDTO>().ReverseMap();
         }
     }
 }

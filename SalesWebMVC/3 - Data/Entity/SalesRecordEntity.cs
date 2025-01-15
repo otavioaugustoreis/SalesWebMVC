@@ -25,7 +25,6 @@ namespace SalesWebMVC.Data.Entity
 
         public List<SalesProductEntity> SalesProductsList { get; set; } = new();
 
-        
         public SalesRecordEntity() 
             : base()
         { 

@@ -1,4 +1,6 @@
-﻿using SalesWebMVC.Data;
+﻿using SalesWebMVC._2___Domain.Interfaces;
+using SalesWebMVC._2___Domain.Services;
+using SalesWebMVC.Data;
 using SalesWebMVC.Models.Repositories;
 using SalesWebMVC.Models.Services;
 
@@ -12,11 +14,21 @@ namespace SalesWebMVC.UnitOfWork
 
         private ISalesRecordService? SalesRecord;
 
+        private IProductService ProductService;
+
         public AppDbContext _context;
 
         public UnitOfWorkClass(AppDbContext context)
         {
             _context = context;
+        }
+
+        public IProductService _Product
+        {
+            get
+            {
+                return ProductService = ProductService ?? new ProductService(_context);
+            }
         }
         public IDepartmentService _Department
         {

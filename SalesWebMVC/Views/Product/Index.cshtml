@@ -1,5 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<SalesWebMVC.Models.DTO.ProductDTO>
+
 @{
+    ViewData["Title"] = "Products";
 }
+
+<h2> @ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" class="btn  btn-default">Create New</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+
+        <tr class="success">
+            <th>
+                @Html.DisplayNameFor(model => model.DsNome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+        </tr>
+    <th></th>
+    </thead>
+    <tbody>
+        @foreach (var products in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => products.DsNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => products.Quantity)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@products.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@products.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@products.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

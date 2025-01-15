@@ -2,14 +2,16 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace SalesWebMVC._3___Data.Entity
 {
 
+    [DebuggerDisplay("{DsNome}")]
     [Table("TB_PRODUCT")]
     public class ProductEntity : EntityPattern
     {
-        [DisplayName("Quantidade")]
+        [DisplayName("Nome")]
         [Column("DS_NOME")]
         public string DsNome { get; set; }
 

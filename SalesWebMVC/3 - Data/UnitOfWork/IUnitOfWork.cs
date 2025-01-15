@@ -1,4 +1,5 @@
-﻿using SalesWebMVC.Models.Repositories;
+﻿using SalesWebMVC._2___Domain.Interfaces;
+using SalesWebMVC.Models.Repositories;
 
 namespace SalesWebMVC.UnitOfWork
 {
@@ -7,7 +8,7 @@ namespace SalesWebMVC.UnitOfWork
         IDepartmentService _Department { get; }
         ISalesRecordService _Sales { get; }
         ISellerService _Seller { get; }
-
+        IProductService _Product { get;  }
         void Commit();
     }
 }
