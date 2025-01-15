@@ -4,9 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using NuGet.Protocol.Plugins;
 using SalesWebMVC._3___Data.Entity;
 using SalesWebMVC.Data.Entity;
+using SalesWebMVC.Models;
 using SalesWebMVC.Models.DTO;
 using SalesWebMVC.Models.Exceptions;
 using SalesWebMVC.UnitOfWork;
+using System.Data;
+using System.Diagnostics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SalesWebMVC._1___Application.Controllers
@@ -119,6 +122,59 @@ namespace SalesWebMVC._1___Application.Controllers
             var dto = _mapper.Map<ProductDTO>(obj);
 
             return View(dto);
+        }
+
+        public ActionResult Error(string message = "Deu erro")
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+            };
+
+            return View(viewModel);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id is null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
+
+
+            var obj = _uof._Product.GetId(p => p.Id == id);
+
+            IEnumerable<DepartmentEntity> departmentEntities = _uof._Department.Get();
+
+            var sellerDto = _mapper.Map<ProductDTO>(obj);
+
+            return View(sellerDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult<ProductDTO> Edit(int? id, ProductDTO productDTO)
+        {
+            if (id != productDTO.Id) BadRequest();
+
+            //Na conversão ele não manda um id para o outro
+            ProductEntity product = _mapper.Map<ProductEntity>(productDTO);
+
+            product.Id = id;
+
+            try
+            {
+                _uof._Product.Put(product);
+                _uof.Commit();
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DBConcurrencyException d)
+            {
+                return RedirectToAction(nameof(Error), new { message = d.Message });
+            }
+            catch (NotFoundException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
         }
     }
 }

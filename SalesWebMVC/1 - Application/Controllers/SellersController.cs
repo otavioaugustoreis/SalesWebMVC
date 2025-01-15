@@ -204,9 +204,6 @@ namespace SalesWebMVC.Controllers
             }
         }
 
-
-
-
         public ActionResult Error(string message = "Deu erro")
         {
             var viewModel = new ErrorViewModel
