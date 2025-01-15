@@ -104,5 +104,21 @@ namespace SalesWebMVC._1___Application.Controllers
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
         }
+
+        public ActionResult<ProductDTO> Details(int? id)
+
+        {
+            if (id < 0 || id is null) return RedirectToAction(nameof(Error), new { message = "Id not found" });
+
+
+            var obj = _uof._Product.GetId(p => p.Id == id);
+
+            if (obj is null) return RedirectToAction(nameof(Error), new { message = "Product not found" });
+
+
+            var dto = _mapper.Map<ProductDTO>(obj);
+
+            return View(dto);
+        }
     }
 }

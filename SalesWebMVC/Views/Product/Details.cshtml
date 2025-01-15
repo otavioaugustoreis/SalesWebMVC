@@ -1,0 +1,29 @@
+﻿@model SalesWebMVC.Models.DTO.ProductDTO
+
+
+@{
+    ViewData["Tittle"] = "Details";
+}
+
+<h2>@ViewData["Tittle"]</h2>
+
+<div>
+    <h4> Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DsNome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DsNome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a asp-action="Index"> Back to List</a>
+</div>
