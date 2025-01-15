@@ -46,7 +46,6 @@ namespace SalesWebMVC._1___Application.Controllers
         }
 
 
-
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

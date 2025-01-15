@@ -9,6 +9,8 @@ namespace SalesWebMVC.UnitOfWork
         ISalesRecordService _Sales { get; }
         ISellerService _Seller { get; }
         IProductService _Product { get;  }
+
+        ISaleProductService _SaleProduct { get; }  
         void Commit();
     }
 }

@@ -23,7 +23,7 @@ namespace SalesWebMVC.Providers
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWorkClass>();
             services.AddScoped<IProductService, ProductService>();
-
+            services.AddScoped<ISaleProductService, SaleProductService>();
 
             return services;
         }

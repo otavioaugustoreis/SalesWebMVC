@@ -14,20 +14,32 @@ namespace SalesWebMVC.UnitOfWork
 
         private ISalesRecordService? SalesRecord;
 
-        private IProductService ProductService;
+        private IProductService Product;
+
+        private ISaleProductService SalesProduct;
 
         public AppDbContext _context;
+
+
 
         public UnitOfWorkClass(AppDbContext context)
         {
             _context = context;
         }
 
+        public ISaleProductService _SaleProduct
+        {
+            get
+            {
+                return SalesProduct = SalesProduct ?? new SaleProductService(_context);
+            }
+        };
+
         public IProductService _Product
         {
             get
             {
-                return ProductService = ProductService ?? new ProductService(_context);
+                return Product = Product ?? new ProductService(_context);
             }
         }
         public IDepartmentService _Department
