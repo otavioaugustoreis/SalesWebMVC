@@ -72,8 +72,5 @@ namespace SalesWebMVC.Controllers
             return View(result);
 
         }
-
-        public 
-
     }
 }

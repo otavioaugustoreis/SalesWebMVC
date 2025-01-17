@@ -1,0 +1,57 @@
+﻿@model SalesWebMVC.Models.DTO.SaleProductDTO
+
+@{
+    ViewData["Title"] = "Generate Sale";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<h4> New Sale</h4>
+</hr> 
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SalesRecordEntity.DsNome" class="control-label"></label>
+                <input asp-for="Seller.DsNome" class="form-control" />
+            </div>
+            </hr>
+            <div class="form-group">
+                <label asp-for="Seller.DsEmail" class="control-label"></label>
+                <input asp-for="Seller.DsEmail" class="form-control" />
+                <span asp-validation-for="Seller.DsEmail" class="text-danger"></span>
+            </div>
+            </hr>
+            <div class="form-group">
+                <label asp-for="Seller.DhAniversario" class="control-label"></label>
+                <input asp-for="Seller.DhAniversario" class="form-control" />
+                <span asp-validation-for="Seller.DhAniversario" class="text-danger"></span>
+            </div>
+            </hr>
+            <div class="form-group">
+                <label asp-for="Seller.NrSalario" class="control-label"></label>
+                <input asp-for="Seller.NrSalario" class="form-control" />
+                <span asp-validation-for="Seller.DsEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Seller.FkDepartamento" class="control-label"></label>
+                <select asp-for="Seller.FkDepartamento" asp-items="@(new SelectList(Model.Department,"Id", "DsNome"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                @* Identificador do Create com o HttpPost é usar esse input escondido*@
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+@* Configurando validações feita por annotations *@
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
