@@ -25,26 +25,26 @@ namespace SalesWebMVC.Data
             {
                 return;
             }
-            ProductEntity p1 = new(1, "Placa mãe", 5);
-            ProductEntity p2 = new(2, "Placa de video", 5);
-            ProductEntity p3 = new(3, "Memoria RAM", 5);
-            ProductEntity p4 = new(4, "Micro-ondas", 5);
-            ProductEntity p5 = new(5, "Secador", 5);
-            ProductEntity p6 = new(6, "Chapinha", 5);
-            ProductEntity p7 = new(7, "Camiseta ", 5);
-            ProductEntity p8 = new(8, "Calça ", 5);
-            ProductEntity p9 = new(9, "Meia", 5);
-            ProductEntity p10 = new(10, "Monitor", 5);
-            ProductEntity p11 = new(11, "Teclado", 5);
-            ProductEntity p12 = new(12, "Mouse", 5);
-            ProductEntity p13 = new(13, "Fone de Ouvido", 5);
-            ProductEntity p14 = new(14, "Câmera", 5);
-            ProductEntity p15 = new(15, "Geladeira", 5);
-            ProductEntity p16 = new(16, "Fogão", 5);
-            ProductEntity p17 = new(17, "Vestido", 5);
-            ProductEntity p18 = new(18, "Terno", 5);
-            ProductEntity p19 = new(19, "Tênis", 5);
-            ProductEntity p20 = new(20, "Relógio", 5);
+            ProductEntity p1 = new(1, "Placa mãe", 5, 100.00);
+            ProductEntity p2 = new(2, "Placa de video", 5, 100.00);
+            ProductEntity p3 = new(3, "Memoria RAM", 5, 100.00);
+            ProductEntity p4 = new(4, "Micro-ondas", 5, 100.00);
+            ProductEntity p5 = new(5, "Secador", 5, 100.00);
+            ProductEntity p6 = new(6, "Chapinha", 5, 100.00);
+            ProductEntity p7 = new(7, "Camiseta ", 5, 100.00);
+            ProductEntity p8 = new(8, "Calça ", 5, 100.00);
+            ProductEntity p9 = new(9, "Meia", 5, 100.00);
+            ProductEntity p10 = new(10, "Monitor", 5, 100.00);
+            ProductEntity p11 = new(11, "Teclado", 5, 100.00);
+            ProductEntity p12 = new(12, "Mouse", 5, 100.00);
+            ProductEntity p13 = new(13, "Fone de Ouvido", 5, 100.00);
+            ProductEntity p14 = new(14, "Câmera", 5, 100.00);
+            ProductEntity p15 = new(15, "Geladeira", 5, 100.00);
+            ProductEntity p16 = new(16, "Fogão", 5, 100.00);
+            ProductEntity p17 = new(17, "Vestido", 5 , 100.00);
+            ProductEntity p18 = new(18, "Terno", 5, 100.00);
+            ProductEntity p19 = new(19, "Tênis", 5, 100.00);
+            ProductEntity p20 = new(20, "Relógio", 5, 100.00);
 
             DepartmentEntity d1 = new DepartmentEntity(1, "Computers");
             DepartmentEntity d2 = new DepartmentEntity(2, "Eletronics");

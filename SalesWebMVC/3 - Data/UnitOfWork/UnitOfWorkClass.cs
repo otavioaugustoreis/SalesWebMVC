@@ -33,7 +33,7 @@ namespace SalesWebMVC.UnitOfWork
             {
                 return SalesProduct = SalesProduct ?? new SaleProductService(_context);
             }
-        };
+        }
 
         public IProductService _Product
         {

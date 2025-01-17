@@ -19,13 +19,19 @@ namespace SalesWebMVC._3___Data.Entity
         [Column("NR_QUANTIDADE")]
         public int Quantity { get; set; }
 
+
+        [DisplayName("Price")]
+        [Column("nr_preco")]
+        public double  NrPreco { get; set; }
+
         public List<SalesProductEntity> SalesProductsList { get; set; } = new();
 
-        public ProductEntity(int id, string dsNome, int quantity)
+        public ProductEntity(int id, string dsNome, int quantity, double nrPreco)
             : base(id)
         {
             DsNome = dsNome;
             Quantity = quantity;
+            NrPreco = nrPreco;
         }
 
         public ProductEntity() : base() { }
