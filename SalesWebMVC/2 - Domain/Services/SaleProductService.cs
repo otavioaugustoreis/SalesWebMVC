@@ -17,14 +17,24 @@ namespace SalesWebMVC._2___Domain.Services
         {
         }
 
-        public async  Task<SalesProductEntity> GenerateSale(int idCliente, int idProduto, SaleStatus saleStatus)
+        //Está dando erro neste método ao executar a procedure 
+        public async  Task GenerateSale(int idCliente, int idProduto, SaleStatus saleStatus)
         {
-            var result = await _context.SalesProduct
-                                .FromSqlInterpolated($"EXEC {storedProcedure} @Param1 = {idCliente}, @Param2 = {idProduto}, @Param3 = {((int)saleStatus)}")
-                                .AsNoTracking()
-                                .FirstOrDefaultAsync();
 
-            return result;
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                await _context.Database.ExecuteSqlInterpolatedAsync(
+                    $"EXEC {storedProcedure} @Param1 = {idProduto}, @Param2 = {idCliente}, @Param3 = {(int)saleStatus}"
+                );
+
+                await transaction.CommitAsync(); // Persiste as mudanças
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync(); // Reverte em caso de erro
+                Console.WriteLine($"Erro: {ex.Message}");
+            }
         }
     }
 }

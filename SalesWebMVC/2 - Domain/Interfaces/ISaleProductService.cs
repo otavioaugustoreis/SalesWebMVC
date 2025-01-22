@@ -6,7 +6,7 @@ namespace SalesWebMVC._2___Domain.Interfaces
 {
     public interface ISaleProductService : IRepository<SalesProductEntity>
     {
-        Task<SalesProductEntity> GenerateSale(int idCliente, int idProduto, SaleStatus saleStatus);
+        Task GenerateSale(int idCliente, int idProduto, SaleStatus saleStatus);
 
     }
 }

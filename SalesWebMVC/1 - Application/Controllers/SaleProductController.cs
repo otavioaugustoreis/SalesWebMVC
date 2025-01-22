@@ -36,7 +36,7 @@ namespace SalesWebMVC._1___Application.Controllers
         public ActionResult<SaleProductDTO> Create(SaleProductDTO saleProductDTO)
         {
             try
-            {
+            {   
                 if (saleProductDTO is null ||saleProductDTO is
                                                {
                                                    IdCLiente :  <= 0,
@@ -47,7 +47,6 @@ namespace SalesWebMVC._1___Application.Controllers
                 }
 
                 _uof._SaleProduct.GenerateSale(saleProductDTO.IdCLiente, saleProductDTO.IdProduto, SaleStatus.BILLED);
-                _uof.Commit();
 
                 return RedirectToAction(nameof(Index), "SalesRecords");
             }                             //A exceção só vai ser capturada caso o when seja verdadeiro
