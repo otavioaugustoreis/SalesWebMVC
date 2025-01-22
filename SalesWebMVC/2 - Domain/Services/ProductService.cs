@@ -10,6 +10,7 @@ namespace SalesWebMVC._2___Domain.Services
     {
         public ProductService(AppDbContext context) : base(context)
         {
+
         }
     }
 }

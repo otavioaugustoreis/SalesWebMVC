@@ -1,5 +1,6 @@
 ﻿using SalesWebMVC.Data.Entity;
 using SalesWebMVC.Patterns;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesWebMVC._3___Data.Entity
@@ -12,8 +13,12 @@ namespace SalesWebMVC._3___Data.Entity
        
         [Column("fk_salesrecord")]
         public int SalesRecordId { get; set; }
+
+
         public ProductEntity Product { get; set; }
 
+
+        [DisplayName("Product")]
         [Column("fk_produto")]
         public int  ProductId { get; set; }
 

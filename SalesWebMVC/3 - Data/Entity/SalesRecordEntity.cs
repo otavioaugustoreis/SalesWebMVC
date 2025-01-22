@@ -18,6 +18,8 @@ namespace SalesWebMVC.Data.Entity
         [Column("ds_valor")]
         public double Valor { get; set; }
 
+
+        [DisplayName("Seller")]
         [Column("fk_seller")]
         public int FkSeller { get; set; }
         public SellerEntity Seller { get; set; }

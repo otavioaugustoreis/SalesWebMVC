@@ -35,7 +35,7 @@ namespace SalesWebMVC.Controllers
             var sellers = await _uof._Seller.FindAllAsync();
 
             var sellerDtoResponse = _mapper.Map<IEnumerable<SellerEntityDTOResponse>>(sellers);
-
+ 
             return View(sellerDtoResponse);
         }
 
@@ -43,6 +43,7 @@ namespace SalesWebMVC.Controllers
         public ActionResult<SellerFormViewDTORequest> Create()
         {
             var departments = _uof._Department.Get();
+
             var viewModel = new SellerFormViewDTORequest()
             {
                 Department = departments

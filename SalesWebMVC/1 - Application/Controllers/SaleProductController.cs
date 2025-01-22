@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using SalesWebMVC.Controllers;
+using SalesWebMVC.Data.Enums;
 using SalesWebMVC.Models.DTO;
+using SalesWebMVC.Models.Exceptions;
 using SalesWebMVC.UnitOfWork;
+using System.Security.Cryptography.Xml;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SalesWebMVC._1___Application.Controllers
 {
@@ -26,12 +31,30 @@ namespace SalesWebMVC._1___Application.Controllers
             return View(viewModel);
         }
 
-
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult<SaleProductDTO> Create(SaleProductDTO saleProductDTO)
         {
-            //Fazer lógica para receber a procedure
-            return View();
+            try
+            {
+                if (saleProductDTO is null ||saleProductDTO is
+                                               {
+                                                   IdCLiente :  <= 0,
+                                                   IdProduto: <= 0
+                                               })
+                {
+                    return RedirectToAction(nameof(Error), new { message = "SaleProduct is not found" });
+                }
+
+                _uof._SaleProduct.GenerateSale(saleProductDTO.IdCLiente, saleProductDTO.IdProduto, SaleStatus.BILLED);
+                _uof.Commit();
+
+                return RedirectToAction(nameof(Index), "SalesRecords");
+            }                             //A exceção só vai ser capturada caso o when seja verdadeiro
+            catch (IntegrityException e) when (e.Message.Contains("Critical"))
+            {
+                return RedirectToAction(nameof(Error), new { message = "SaleProduct is not found" });
+            }
         }
     }
 }
